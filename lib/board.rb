@@ -4,8 +4,8 @@
 class Board
   attr_reader :gameboard, :winner
 
-  def initialize(gameboard = nil, winner = nil)
-    @gameboard ||= new_board
+  def initialize(gameboard = new_board, winner = nil)
+    @gameboard = gameboard
     @winner = winner
   end
 
@@ -14,4 +14,9 @@ class Board
       hash[key] = Array.new(6) { |i| (i + 1).to_s }
     end
   end
+
+  def full_board?(columns = gameboard.values)
+    columns.flatten.none?(/[1-6]/)
+  end
+
 end
