@@ -4,7 +4,7 @@
 class Board
   attr_reader :gameboard, :winner
 
-  def initialize(gameboard = new_board, winner = nil)
+  def initialize(gameboard = new_board, winner = "")
     @gameboard = gameboard
     @winner = winner
   end
@@ -17,6 +17,13 @@ class Board
 
   def full_board?(columns = gameboard.values)
     columns.flatten.none?(/[1-6]/)
+  end
+
+  def column_winner(columns = gameboard.values)
+    columns.each do |col|
+      return @winner = "X" if col.join.include?("XXXX")
+      return @winner = "O" if col.join.include?("OOOO")
+    end
   end
 
 end
