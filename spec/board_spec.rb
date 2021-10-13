@@ -8,6 +8,8 @@ describe Board do
   col_b = %w[O X O X O X]
   col_x = %w[X O X X X X]
   col_o = %w[O O O O X O]
+  col_xr = %w[O X X X O X]
+  col_or = %w[X O O O X O]
 
   describe "#initialize" do
     context "when default board is used" do
@@ -39,19 +41,53 @@ describe Board do
   end
 
   describe "#column_winner" do
-    context "when 4 Xs in a column" do
-      it "returns X" do
+    context "when 4 connected Xs in a column" do
+      it "sets @winner to X" do
         col_winning_x_board = [col_a, col_b, col_b, col_x, col_a, col_b, col_b]
         new_board.column_winner(col_winning_x_board)
         expect(new_board.winner).to eq("X")
       end
     end
 
-    context "when 4 Os in a column" do
-      it "returns O" do
+    context "when 4 connected Os in a column" do
+      it "sets @winner to O" do
         col_winning_o_board = [col_o, col_b, col_b, col_a, col_a, col_b, col_b]
         new_board.column_winner(col_winning_o_board)
         expect(new_board.winner).to eq("O")
+      end
+    end
+
+    context "when no winning column condition" do
+      it "does not change @winner" do
+        filled_board = [col_a, col_b, col_a, col_a, col_b, col_b]
+        new_board.column_winner(filled_board)
+        expect(new_board.winner).to eq("")
+      end
+    end
+  end
+
+  describe "#row_winner" do
+    context "when 4 Xs in a row" do
+      it "sets @winner to X" do
+        row_winning_x_board = [col_a, col_b, col_xr, col_a, col_a, col_xr, col_b].transpose
+        new_board.row_winner(row_winning_x_board)
+        expect(new_board.winner).to eq("X")
+      end
+    end
+
+    context "when 4 connected Os in a row" do
+      it "sets @winner to O" do
+        row_winning_o_board = [col_or, col_b, col_b, col_or, col_a, col_b, col_b].transpose
+        new_board.row_winner(row_winning_o_board)
+        expect(new_board.winner).to eq("O")
+      end
+    end
+
+    context "when no winning row condition" do
+      it "returns empty" do
+        col_winning_o_board = [col_o, col_b, col_b, col_a, col_a, col_b, col_b].transpose
+        new_board.row_winner(col_winning_o_board)
+        expect(new_board.winner).to eq("")
       end
     end
   end

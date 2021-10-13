@@ -20,6 +20,14 @@ class Board
   end
 
   def column_winner(columns = gameboard.values)
+    check_for_winner(columns)
+  end
+
+  def row_winner(rows = gameboard.values.transpose)
+    check_for_winner(rows)
+  end
+
+  def check_for_winner(columns = gameboard.values)
     columns.each do |col|
       return @winner = "X" if col.join.include?("XXXX")
       return @winner = "O" if col.join.include?("OOOO")
