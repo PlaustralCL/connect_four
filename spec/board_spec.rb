@@ -91,4 +91,34 @@ describe Board do
       end
     end
   end
+
+  describe "#diagonal_winner" do
+    # These tests primarily serve as a test of Diagonal module. It aslo verifies
+    # that Board is calling the methods from Diagonal when needed.
+    context "when 4 Xs connected in a line" do
+      it "sets @winner to X" do
+        board = "XOXOXO,OXXOXO,XXXOXO,OXOXOX,XOXOOO,XOXOOX,XOXOXX"
+        diag_winning_x_board = board.split(",").map(&:chars).transpose
+        new_board.diagonal_winner(diag_winning_x_board)
+        expect(new_board.winner).to eq("X")
+      end
+    end
+
+    context "when 4 Os connected in a diagonal" do
+      it "sets @winner to O" do
+        board = "OXOXOX,XOOXOX,OOXXOX,XOXOXO,OXXXOX,OXOOXO,OXOXOO"
+        diag_winning_o_board = board.split(",").map(&:chars).transpose
+        new_board.diagonal_winner(diag_winning_o_board)
+        expect(new_board.winner).to eq("O")
+      end
+    end
+
+    context " when no winning diagonal" do
+      it "maintains @winner as empty" do
+        col_winning_o_board = [col_o, col_b, col_b, col_a, col_a, col_b, col_b].transpose
+        new_board.row_winner(col_winning_o_board)
+        expect(new_board.winner).to eq("")
+      end
+    end
+  end
 end

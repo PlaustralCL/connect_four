@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require_relative "diagonal"
+
 # Maintains the overall model of the game. Checks for game over conditions
 class Board
+  include Diagonal
+
   attr_reader :gameboard, :winner
 
   def initialize(gameboard = new_board, winner = "")
@@ -25,6 +29,11 @@ class Board
 
   def row_winner(rows = gameboard.values.transpose)
     check_for_winner(rows)
+  end
+
+  def diagonal_winner(matrix = gameboard.values.transpose)
+    check_for_winner(diagonals(matrix))
+    check_for_winner(anti_diagonals(matrix))
   end
 
   def check_for_winner(columns = gameboard.values)
