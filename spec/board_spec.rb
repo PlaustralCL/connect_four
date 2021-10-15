@@ -53,44 +53,49 @@ describe Board do
     end
 
     context "when 4 connected Os in a column" do
+      col_winning_o_board = { "1" => col_o, "2" => col_b, "3" => col_b, "4" => col_a, "5" => col_a, "6" => col_b, "7" => col_empty }
+      subject(:column_o) { described_class.new(col_winning_o_board) }
       it "sets @winner to O" do
-        col_winning_o_board = [col_o, col_b, col_b, col_a, col_a, col_b, col_b]
-        new_board.column_winner(col_winning_o_board)
-        expect(new_board.winner).to eq("O")
+        column_o.column_winner
+        expect(column_o.winner).to eq("O")
       end
     end
 
     context "when no winning column condition" do
+      filled_board = { "1" => col_a, "2" => col_b, "3" => col_b, "4" => col_a, "5" => col_a, "6" => col_b, "7" => col_b }
+      subject(:board_full) { described_class.new(filled_board) }
       it "does not change @winner" do
-        filled_board = [col_a, col_b, col_b, col_a, col_a, col_b, col_b]
-        new_board.column_winner(filled_board)
-        expect(new_board.winner).to eq("")
+        board_full.column_winner
+        expect(board_full.winner).to eq("")
       end
     end
   end
 
   describe "#row_winner" do
     context "when 4 Xs in a row" do
+      row_winning_x_board = { "1" => col_a, "2" => col_b, "3" => col_xr, "4" => col_a, "5" => col_a, "6" => col_xr, "7" => col_b }
+      subject(:row_x) { described_class.new(row_winning_x_board) }
       it "sets @winner to X" do
-        row_winning_x_board = [col_a, col_b, col_xr, col_a, col_a, col_xr, col_b].transpose
-        new_board.row_winner(row_winning_x_board)
-        expect(new_board.winner).to eq("X")
+        row_x.row_winner
+        expect(row_x.winner).to eq("X")
       end
     end
 
     context "when 4 connected Os in a row" do
+      row_winning_o_board = { "1" => col_or, "2" => col_b, "3" => col_b, "4" => col_or, "5" => col_a, "6" => col_b, "7" => col_b }
+      subject(:row_y) { described_class.new(row_winning_o_board) }
       it "sets @winner to O" do
-        row_winning_o_board = [col_or, col_b, col_b, col_or, col_a, col_b, col_b].transpose
-        new_board.row_winner(row_winning_o_board)
-        expect(new_board.winner).to eq("O")
+        row_y.row_winner
+        expect(row_y.winner).to eq("O")
       end
     end
 
     context "when no winning row condition" do
+      filled_board = { "1" => col_a, "2" => col_b, "3" => col_b, "4" => col_a, "5" => col_a, "6" => col_b, "7" => col_b }
+      subject(:board_full) { described_class.new(filled_board) }
       it "returns empty" do
-        col_winning_o_board = [col_o, col_b, col_b, col_a, col_a, col_b, col_b].transpose
-        new_board.row_winner(col_winning_o_board)
-        expect(new_board.winner).to eq("")
+        board_full.row_winner
+        expect(board_full.winner).to eq("")
       end
     end
   end
@@ -98,29 +103,39 @@ describe Board do
   describe "#diagonal_winner" do
     # These tests primarily serve as a test of Diagonal module. It aslo verifies
     # that Board is calling the methods from Diagonal when needed.
+
     context "when 4 Xs connected in a line" do
+      board = "XOXOXO,OXXOXO,XXXOXO,OXOXOX,XOXOOO,XOXOOX,XOXOXX"
+      board = board.split(",").map(&:chars)
+      diag_winning_x_board = {}
+      ("1".."7").each_with_index { |col, index| diag_winning_x_board[col] = board[index] }
+      subject(:diag_x) { described_class.new(diag_winning_x_board) }
+
       it "sets @winner to X" do
-        board = "XOXOXO,OXXOXO,XXXOXO,OXOXOX,XOXOOO,XOXOOX,XOXOXX"
-        diag_winning_x_board = board.split(",").map(&:chars).transpose
-        new_board.diagonal_winner(diag_winning_x_board)
-        expect(new_board.winner).to eq("X")
+        diag_x.diagonal_winner
+        expect(diag_x.winner).to eq("X")
       end
     end
 
     context "when 4 Os connected in a diagonal" do
+      board = "OXOXOX,XOOXOX,OOXXOX,XOXOXO,OXXXOX,OXOOXO,OXOXOO"
+      board = board.split(",").map(&:chars)
+      diag_winning_o_board = {}
+      ("1".."7").each_with_index { |col, index| diag_winning_o_board[col] = board[index] }
+      subject(:diag_o) { described_class.new(diag_winning_o_board) }
+
       it "sets @winner to O" do
-        board = "OXOXOX,XOOXOX,OOXXOX,XOXOXO,OXXXOX,OXOOXO,OXOXOO"
-        diag_winning_o_board = board.split(",").map(&:chars).transpose
-        new_board.diagonal_winner(diag_winning_o_board)
-        expect(new_board.winner).to eq("O")
+        diag_o.diagonal_winner
+        expect(diag_o.winner).to eq("O")
       end
     end
 
     context "when no winning diagonal" do
+      filled_board = { "1" => col_a, "2" => col_b, "3" => col_b, "4" => col_a, "5" => col_a, "6" => col_b, "7" => col_b }
+      subject(:board_full) { described_class.new(filled_board) }
       it "maintains @winner as empty" do
-        col_winning_o_board = [col_o, col_b, col_b, col_a, col_a, col_b, col_b].transpose
-        new_board.row_winner(col_winning_o_board)
-        expect(new_board.winner).to eq("")
+        board_full.diagonal_winner
+        expect(board_full.winner).to eq("")
       end
     end
   end
@@ -169,6 +184,15 @@ describe Board do
       subject(:game_diagonal) { described_class.new(diagonal_winner) }
       it "returns true" do
         expect(game_diagonal.game_over?).to be true
+      end
+    end
+  end
+
+  describe "#update_board" do
+    context "when update is for an empty column" do
+      xit "it adds a marker to the last element in the array" do
+        new_board.update_board("3", "X")
+        expect(new_board.gameboard["3"]).to eq(%w[1 2 3 4 5 X])
       end
     end
   end

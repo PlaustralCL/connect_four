@@ -13,14 +13,22 @@ class Board
     @winner = winner
   end
 
+  def game_over?
+    full_board? || winning_position?
+  end
+
+  def update_board(column, marker)
+
+  end
+
+  ########################################
+  #   Not part of the public interface   #
+  ########################################
+
   def new_board
     ("1".."7").to_a.each_with_object({}) do |key, hash|
       hash[key] = Array.new(6) { |i| (i + 1).to_s }
     end
-  end
-
-  def game_over?
-    full_board? || winning_position?
   end
 
   def full_board?
@@ -34,15 +42,16 @@ class Board
     @winner == "X" || @winner == "O"
   end
 
-  def column_winner(columns = gameboard_columns)
-    check_for_winner(columns)
+  def column_winner
+    check_for_winner(gameboard_columns)
   end
 
-  def row_winner(rows = gameboard_rows)
-    check_for_winner(rows)
+  def row_winner
+    check_for_winner(gameboard_rows)
   end
 
-  def diagonal_winner(matrix = gameboard_rows)
+  def diagonal_winner
+    matrix = gameboard_rows
     check_for_winner(diagonals(matrix))
     check_for_winner(anti_diagonals(matrix))
   end
