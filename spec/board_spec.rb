@@ -190,9 +190,26 @@ describe Board do
 
   describe "#update_board" do
     context "when update is for an empty column" do
-      xit "it adds a marker to the last element in the array" do
+      it "it adds a marker to the last element in the array" do
         new_board.update_board("3", "X")
         expect(new_board.gameboard["3"]).to eq(%w[1 2 3 4 5 X])
+      end
+    end
+
+    context "when the update is for the last cell in the column" do
+      mostly_full_column = {
+        "1" => %w[O X O X O X],
+        "2" => col_empty,
+        "3" => %w[O O X X O X],
+        "4" => col_empty,
+        "5" => %w[1 X X X O X],
+        "6" => col_empty,
+        "7" => %w[O X O X O O]
+      }
+      subject(:full_update) { described_class.new(mostly_full_column) }
+      it "adds a marker to the first element in the array" do
+        full_update.update_board("5", "O")
+        expect(full_update.gameboard["5"]).to eq(%w[O X X X O X])
       end
     end
   end

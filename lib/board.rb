@@ -18,7 +18,14 @@ class Board
   end
 
   def update_board(column, marker)
-
+    # The way the board is modeled the "bottom" of the board is actually the
+    # last element in the array, the "top" of the board is the first element of
+    # the array. Therefore, the array needs to be filled from the last element
+    # to the first element. Reversing the array makes it easier accomplish that.
+    working_column = gameboard[column].reverse
+    marker_index = working_column.index { |cell| cell =~ /\d/ }
+    working_column[marker_index] = marker
+    @gameboard[column] = working_column.reverse
   end
 
   ########################################
