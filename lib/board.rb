@@ -19,11 +19,22 @@ class Board
     end
   end
 
-  def full_board?(columns = gameboard_colums)
-    columns.flatten.none?(/[1-6]/)
+  def game_over?
+    full_board? || winning_position?
   end
 
-  def column_winner(columns = gameboard_colums)
+  def full_board?
+    gameboard_columns.flatten.none?(/[1-6]/)
+  end
+
+  def winning_position?
+    column_winner
+    row_winner
+    diagonal_winner
+    @winner == "X" || @winner == "O"
+  end
+
+  def column_winner(columns = gameboard_columns)
     check_for_winner(columns)
   end
 
@@ -36,14 +47,14 @@ class Board
     check_for_winner(anti_diagonals(matrix))
   end
 
-  def check_for_winner(columns = gameboard_colums)
+  def check_for_winner(columns = gameboard_columns)
     columns.each do |col|
       return @winner = "X" if col.join.include?("XXXX")
       return @winner = "O" if col.join.include?("OOOO")
     end
   end
 
-  def gameboard_colums
+  def gameboard_columns
     gameboard.values
   end
 

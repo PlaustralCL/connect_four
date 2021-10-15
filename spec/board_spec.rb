@@ -10,6 +10,7 @@ describe Board do
   col_o = %w[O O O O X O]
   col_xr = %w[O X X X O X]
   col_or = %w[X O O O X O]
+  col_empty = Array.new(6) { |i| (i + 1).to_s }
 
   describe "#initialize" do
     context "when default board is used" do
@@ -33,19 +34,21 @@ describe Board do
     end
 
     context "when board is full" do
+      filled_board = { "1" => col_a, "2" => col_b, "3" => col_b, "4" => col_a, "5" => col_a, "6" => col_b, "7" => col_b }
+      subject(:board_full) { described_class.new(filled_board) }
       it "returns true" do
-        filled_board = [col_a, col_b, col_a, col_a, col_b, col_b]
-        expect(new_board.full_board?(filled_board)).to be true
+        expect(board_full.full_board?).to be true
       end
     end
   end
 
   describe "#column_winner" do
     context "when 4 connected Xs in a column" do
+      col_winning_x_board = { "1" => col_a, "2" => col_b, "3" => col_b, "4" => col_x, "5" => col_a, "6" => col_b, "7" => col_b }
+      subject(:column_x) { described_class.new(col_winning_x_board) }
       it "sets @winner to X" do
-        col_winning_x_board = [col_a, col_b, col_b, col_x, col_a, col_b, col_b]
-        new_board.column_winner(col_winning_x_board)
-        expect(new_board.winner).to eq("X")
+        column_x.column_winner
+        expect(column_x.winner).to eq("X")
       end
     end
 
@@ -59,7 +62,7 @@ describe Board do
 
     context "when no winning column condition" do
       it "does not change @winner" do
-        filled_board = [col_a, col_b, col_a, col_a, col_b, col_b]
+        filled_board = [col_a, col_b, col_b, col_a, col_a, col_b, col_b]
         new_board.column_winner(filled_board)
         expect(new_board.winner).to eq("")
       end
@@ -113,11 +116,59 @@ describe Board do
       end
     end
 
-    context " when no winning diagonal" do
+    context "when no winning diagonal" do
       it "maintains @winner as empty" do
         col_winning_o_board = [col_o, col_b, col_b, col_a, col_a, col_b, col_b].transpose
         new_board.row_winner(col_winning_o_board)
         expect(new_board.winner).to eq("")
+      end
+    end
+  end
+
+  describe "#game_over?" do
+    context "when the board is full" do
+      filled_board = { "1" => col_a, "2" => col_b, "3" => col_b, "4" => col_a, "5" => col_a, "6" => col_b, "7" => col_b }
+      subject(:game_full) { described_class.new(filled_board) }
+      it "returns true" do
+        expect(game_full.game_over?).to be true
+      end
+    end
+
+    context "when board is not full and no winning condition" do
+      partial_board = { "1" => col_a, "2" => col_b, "3" => col_empty, "4" => col_empty, "5" => col_empty, "6" => col_empty, "7" => col_b }
+      subject(:game_partial) { described_class.new(partial_board) }
+      it "returns false" do
+        expect(game_partial.game_over?).to be false
+      end
+    end
+
+    context "when winning on a column" do
+      col_winning_o_board = { "1" => col_o, "2" => col_b, "3" => col_b, "4" => col_a, "5" => col_a, "6" => col_b, "7" => col_empty }
+      subject(:game_column) { described_class.new(col_winning_o_board) }
+      it "returns true" do
+        expect(game_column.game_over?).to be true
+      end
+    end
+
+    context "when winning on a row" do
+      row_winning_x_board = { "1" => col_empty, "2" => col_b, "3" => col_xr, "4" => col_a, "5" => col_a, "6" => col_xr, "7" => col_b }
+      subject(:game_row) { described_class.new(row_winning_x_board) }
+      it "returns true" do
+        expect(game_row.game_over?).to be true
+      end
+    end
+
+    context "when winning on a diagonal" do
+      diagonal_winner = { "1" => %w[O X O X O X],
+                          "2" => col_empty,
+                          "3" => %w[O O X X O X],
+                          "4" => %w[X O X O X O],
+                          "5" => %w[O X X X O X],
+                          "6" => %w[O X O O X O],
+                          "7" => %w[O X O X O O] }
+      subject(:game_diagonal) { described_class.new(diagonal_winner) }
+      it "returns true" do
+        expect(game_diagonal.game_over?).to be true
       end
     end
   end
