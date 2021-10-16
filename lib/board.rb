@@ -81,5 +81,4 @@ class Board
   def gameboard_rows
     gameboard.values.transpose
   end
-
 end
