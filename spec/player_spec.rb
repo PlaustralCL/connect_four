@@ -56,6 +56,7 @@ describe Player do
   describe "#player_turn" do
     subject(:player_loop) { described_class.new }
     let(:choices) { %w[1 2 3 4 7] }
+    let(:choices1) { %w[2 3 4 6 7 q] }
 
     context "when user input is valid" do
       it "stops loop and does not recieve error message" do
@@ -67,7 +68,6 @@ describe Player do
     end
 
     context "when user input enters incorrect choice once, then a valid choice" do
-      let(:choices1) { %w[2 3 4 6 7 q] }
       it "completes loops and displays error message once" do
         valid_input = "3"
         allow(player_loop).to receive(:player_input)
@@ -78,7 +78,6 @@ describe Player do
     end
 
     context "when user inputs two incorrect values, then a valid input" do
-      let(:choices1) { %w[2 3 4 6 7 q] }
       it "completes loops and displays error message twice" do
         valid_input = "3"
         allow(player_loop).to receive(:player_input)
