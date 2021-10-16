@@ -28,6 +28,10 @@ class Board
     @gameboard[column] = working_column.reverse
   end
 
+  def available_columns
+    gameboard.select { |_column, array| array.any?(/\d/) }.keys
+  end
+
   ########################################
   #   Not part of the public interface   #
   ########################################

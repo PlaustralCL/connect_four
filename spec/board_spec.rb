@@ -213,4 +213,44 @@ describe Board do
       end
     end
   end
+
+  describe "#available_columns" do
+    context "board is empty" do
+      it "returns all columns" do
+        expect(new_board.available_columns).to eq(%w[1 2 3 4 5 6 7])
+      end
+    end
+
+    context "when a column is partially full" do
+      partially_full_columns = {
+        "1" => %w[O X O X O X],
+        "2" => col_empty,
+        "3" => %w[O O X X O X],
+        "4" => col_empty,
+        "5" => %w[1 X X X O X],
+        "6" => %w[O O X X O X],
+        "7" => %w[1 2 O X O O]
+      }
+      subject(:partial_columns) { described_class.new(partially_full_columns) }
+      it "includes the partially full column" do
+        expect(partial_columns.available_columns).to eq(%w[2 4 5 7])
+      end
+    end
+
+    context "when a column is full" do
+      full_columns_board = {
+        "1" => %w[O X O X O X],
+        "2" => col_empty,
+        "3" => %w[O O X X O X],
+        "4" => col_empty,
+        "5" => %w[O X X X O X],
+        "6" => col_empty,
+        "7" => %w[O X O X O O]
+      }
+      subject(:full_columns) { described_class.new(full_columns_board) }
+      it "is not included" do
+        expect(full_columns.available_columns).to eq(%w[2 4 6])
+      end
+    end
+  end
 end
