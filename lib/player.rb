@@ -10,9 +10,8 @@ class Player
     @marker = marker
   end
 
-  def player_turn(board = Board.new)
+  def player_turn(available_choices)
     loop do
-      available_choices = board.available_columns
       input = verify_input(player_input, available_choices)
       return input if input
 

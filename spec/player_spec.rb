@@ -60,10 +60,9 @@ describe Player do
     context "when user input is valid" do
       it "stops loop and does not recieve error message" do
         valid_input = "3"
-        allow(board_double).to receive(:available_columns).and_return(choices)
         allow(player_loop).to receive(:player_input).and_return(valid_input)
         expect(player_loop).not_to receive(:puts).with("Input Error! Please use one of the following choices: 1, 2, 3, 4, 7, q")
-        player_loop.player_turn(board_double)
+        player_loop.player_turn(choices)
       end
     end
 
@@ -71,11 +70,10 @@ describe Player do
       let(:choices1) { %w[2 3 4 6 7 q] }
       it "completes loops and displays error message once" do
         valid_input = "3"
-        allow(board_double).to receive(:available_columns).and_return(choices1)
         allow(player_loop).to receive(:player_input)
         allow(player_loop).to receive(:verify_input).and_return(nil, valid_input)
         expect(player_loop).to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, q").once
-        player_loop.player_turn(board_double)
+        player_loop.player_turn(choices1)
       end
     end
 
@@ -83,11 +81,10 @@ describe Player do
       let(:choices1) { %w[2 3 4 6 7 q] }
       it "completes loops and displays error message twice" do
         valid_input = "3"
-        allow(board_double).to receive(:available_columns).and_return(choices1)
         allow(player_loop).to receive(:player_input)
         allow(player_loop).to receive(:verify_input).and_return(nil, nil, valid_input)
         expect(player_loop).to receive(:puts).with("Input Error! Please use one of the following choices: 2, 3, 4, 6, 7, q").twice
-        player_loop.player_turn(board_double)
+        player_loop.player_turn(choices1)
       end
     end
   end
