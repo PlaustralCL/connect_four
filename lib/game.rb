@@ -16,6 +16,7 @@ class Game
   end
 
   def play_game
+    setup
     current_player = player1
     until board.game_over?
       break if play_one_round(current_player) == "quit"
@@ -26,10 +27,28 @@ class Game
   end
 
   def play_one_round(current_player)
+    column = current_player.player_turn
+    return "quit" if column == "q"
 
+    board.update_board(column, current_player.marker)
+    show_board
+  end
+
+  def show_board
+
+  end
+
+  def setup
+    introduction
+    show_board
   end
 
   def final_message
 
   end
+
+  def introduction
+
+  end
+
 end
