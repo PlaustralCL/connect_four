@@ -16,12 +16,20 @@ class Game
   end
 
   def play_game
+    current_player = player1
     until board.game_over?
-      play_one_round
+      break if play_one_round(current_player) == "quit"
+
+      current_player = current_player = player1 ? player2 : player1
     end
+    final_message
   end
 
-  def play_one_round
+  def play_one_round(current_player)
+
+  end
+
+  def final_message
 
   end
 end
