@@ -58,7 +58,9 @@ class Game
   end
 
   def play_again?
-    request_input("Do you want to play again? Y/n")
+    phrase = "Do you want to play again? Y/n"
+    input = verify_input(request_input(phrase))
+    input.downcase == "y"
   end
 
   def reset_game

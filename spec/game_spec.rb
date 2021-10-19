@@ -55,7 +55,7 @@ describe Game do
     context "when playing again" do
       it "calls reset_game" do
         allow(board).to receive_messages(setup: nil, game_over?: true)
-        allow(basic_game).to receive(:play_again?).and_return("Y")
+        allow(basic_game).to receive(:play_again?).and_return(true)
         expect(basic_game).to receive(:reset_game).once
         basic_game.play_game
       end
@@ -64,7 +64,7 @@ describe Game do
     context "when not playing again" do
       it "does not call reset_game" do
         allow(board).to receive_messages(setup: nil, game_over?: true)
-        allow(basic_game).to receive(:play_again?).and_return(nil)
+        allow(basic_game).to receive(:play_again?).and_return(false)
         expect(basic_game).not_to receive(:reset_game)
         basic_game.play_game
       end
