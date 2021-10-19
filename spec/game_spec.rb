@@ -122,4 +122,16 @@ describe Game do
       end
     end
   end
+
+  describe "#play_again?" do
+    it "sends request_input" do
+      expect(basic_game).to receive(:request_input).once
+      basic_game.play_again?
+    end
+
+    it "sends verify_input" do
+      expect(basic_game).to receive(:verify_input).once
+      basic_game.play_again?
+    end
+  end
 end
