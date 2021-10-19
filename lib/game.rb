@@ -58,7 +58,7 @@ class Game
   end
 
   def play_again?
-    choices = [("a".."z").to_a, ("0".."9").to_a, ""].flatten
+    choices = %w[y n]
     phrase = "Do you want to play again? y/N"
     input = verify_input(request_input(phrase), choices)
     input == "y"
