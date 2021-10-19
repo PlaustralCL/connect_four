@@ -9,12 +9,12 @@ describe Player do
 
   describe "#verify_input" do
     subject(:verify_game) { described_class.new }
-    let(:choices) { %w[2 3 4 6] }
+    let(:choices) { %w[2 3 4 6 q] }
 
     context "when a valid choice is entered" do
-      let(:user_input) { "2" }
+      let(:player_input) { "2" }
       it "returns the valid choice" do
-        expect(verify_game.verify_input(user_input, choices)).to eq("2")
+        expect(verify_game.verify_input(player_input, choices)).to eq("2")
       end
     end
 
@@ -56,7 +56,7 @@ describe Player do
   describe "#player_turn" do
     subject(:player_loop) { described_class.new }
     let(:choices) { %w[1 2 3 4 7] }
-    let(:choices1) { %w[2 3 4 6 7 q] }
+    let(:choices1) { %w[2 3 4 6 7] }
 
     context "when user input is valid" do
       it "stops loop and does not recieve error message" do
