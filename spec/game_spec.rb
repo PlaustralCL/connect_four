@@ -15,6 +15,7 @@ describe Game do
 
     context "when game is over" do
       it "calls game_over only once" do
+        allow(basic_game).to receive(:play_again?).and_return(nil)
         allow(board).to receive(:game_over?).and_return(true)
         expect(board).to receive(:game_over?).once
         basic_game.play_game
@@ -23,6 +24,7 @@ describe Game do
 
     context "when two rounds are played before game over" do
       it "calls game_over? three times before exiting" do
+        allow(basic_game).to receive(:play_again?).and_return(nil)
         allow(basic_game).to receive(:play_one_round).and_return(nil)
         allow(board).to receive(:game_over?).and_return(false, false, true)
         expect(board).to receive(:game_over?).exactly(3).times
@@ -32,6 +34,7 @@ describe Game do
 
     context "when two rounds are played" do
       it "alternates players" do
+        allow(basic_game).to receive(:play_again?).and_return(nil)
         allow(board).to receive(:game_over?).and_return(false, false, true)
         expect(basic_game).to receive(:play_one_round).with(player1)
         expect(basic_game).to receive(:play_one_round).with(player2)
@@ -41,9 +44,28 @@ describe Game do
 
     context "when input is q" do
       it "breaks the loop" do
+        allow(basic_game).to receive(:play_again?).and_return(nil)
         allow(board).to receive(:game_over?).and_return(false, false, true)
         allow(basic_game).to receive(:play_one_round).and_return("quit")
         expect(basic_game).to receive(:play_one_round).once
+        basic_game.play_game
+      end
+    end
+
+    context "when playing again" do
+      it "calls reset_game" do
+        allow(board).to receive_messages(setup: nil, game_over?: true)
+        allow(basic_game).to receive(:play_again?).and_return("Y")
+        expect(basic_game).to receive(:reset_game).once
+        basic_game.play_game
+      end
+    end
+
+    context "when not playing again" do
+      it "does not call reset_game" do
+        allow(board).to receive_messages(setup: nil, game_over?: true)
+        allow(basic_game).to receive(:play_again?).and_return(nil)
+        expect(basic_game).not_to receive(:reset_game)
         basic_game.play_game
       end
     end
@@ -65,6 +87,38 @@ describe Game do
         allow(basic_game).to receive(:show_board).and_return(nil)
         expect(board).to receive(:update_board).with("3", "O")
         basic_game.play_one_round(player2)
+      end
+    end
+  end
+
+  describe "#show_board" do
+    xit "calls method to create board" do
+
+    end
+  end
+
+  describe "#final_message" do
+    context "when the game is tied" do
+      it "shows the tie message" do
+        tie_phrase = "The game was tied.\nThanks for playing!\n"
+        allow(board).to receive(:winner).and_return("")
+        expect { basic_game.final_message }.to output(tie_phrase).to_stdout
+      end
+    end
+
+    context "when player1 wins" do
+      it "states player1 won" do
+        player1_phrase = "#{player1.name} won!\nThanks for playing!\n"
+        allow(board).to receive(:winner).and_return("X")
+        expect { basic_game.final_message }.to output(player1_phrase).to_stdout
+      end
+    end
+
+    context "when player2 wins" do
+      it "states player2 won" do
+        player2_phrase = "#{player2.name} won!\nThanks for playing!\n"
+        allow(board).to receive(:winner).and_return("O")
+        expect { basic_game.final_message }.to output(player2_phrase).to_stdout
       end
     end
   end
