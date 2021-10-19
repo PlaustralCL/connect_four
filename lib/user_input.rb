@@ -4,7 +4,6 @@
 module UserInput
   # These methods are tested with the Player class
   def verify_input(input, choices = nil)
-    # choices << "q" unless choices.include?("q")
     return input if choices.map(&:to_s).include?(input)
   end
 
