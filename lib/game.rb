@@ -58,10 +58,8 @@ class Game
   end
 
   def play_again?
-    choices = %w[y n]
     phrase = "Do you want to play again? y/N"
-    input = verify_input(request_input(phrase), choices)
-    input == "y"
+    request_input(phrase) == "y"
   end
 
   def reset_game
