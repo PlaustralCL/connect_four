@@ -12,7 +12,7 @@ class Game
 
   attr_reader :board, :player1, :player2
 
-  def initialize(board = Board.new, player1 = Player.new("Player 1", "X"), player2 = Player.new("Player 2" "O"))
+  def initialize(board = Board.new, player1 = Player.new("Player 1", "X"), player2 = Player.new("Player 2", "O"))
     @board = board
     @player1 = player1
     @player2 = player2
@@ -24,7 +24,7 @@ class Game
     until board.game_over?
       break if play_one_round(current_player) == "quit"
 
-      current_player = current_player = player1 ? player2 : player1
+      current_player = current_player == player1 ? player2 : player1
     end
     final_message
     reset_game if play_again?
@@ -70,7 +70,7 @@ class Game
   end
 
   def introduction
-
+    puts "Welcome to Connect Four"
   end
 
 end

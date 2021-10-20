@@ -10,7 +10,7 @@ describe Game do
 
   describe "#play_game" do
     before do
-      allow(basic_game).to receive_messages(final_message: nil)
+      allow(basic_game).to receive_messages(setup: nil, final_message: nil)
     end
 
     context "when game is over" do
@@ -34,10 +34,10 @@ describe Game do
 
     context "when two rounds are played" do
       it "alternates players" do
-        allow(basic_game).to receive(:play_again?).and_return(nil)
+        allow(basic_game).to receive(:play_again?).and_return(false)
         allow(board).to receive(:game_over?).and_return(false, false, true)
-        expect(basic_game).to receive(:play_one_round).with(player1)
-        expect(basic_game).to receive(:play_one_round).with(player2)
+        expect(basic_game).to receive(:play_one_round).with(player1).once
+        expect(basic_game).to receive(:play_one_round).with(player2).once
         basic_game.play_game
       end
     end
@@ -126,11 +126,6 @@ describe Game do
   describe "#play_again?" do
     it "sends request_input" do
       expect(basic_game).to receive(:request_input).once
-      basic_game.play_again?
-    end
-
-    it "sends verify_input" do
-      expect(basic_game).to receive(:verify_input).once
       basic_game.play_again?
     end
   end
