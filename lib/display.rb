@@ -2,22 +2,27 @@
 
 # Convert the Board information into something suitable for display.
 class Display
-  attr_reader :board
+  attr_reader :board, :location
 
-  def initialize(board = Array.new(6) { |i| i.to_s })
+  def initialize(board: Array.new(6) { |i| i.to_s }, location: nil)
     @board = board
+    @location = location
   end
 
   def update_markers
     board.flatten.map do |marker|
       case marker
       when "X"
-        "\u{1F534}"
+        location ? "\u{1F534}" : "\e[31;41m\u2b1b\e[0m"
       when "O"
-        "\u{1f7e1}"
+        location ? "\u{1f7e1}" : "\e[36;46m\u2b1b\e[0m"
       else
-        "\u26ab"
+        location ? "\u26ab" : "\e[1;30;1;40m\u2b1b\e[0m"
       end
     end
+  end
+
+  def clear_terminal
+    system("clear") || system("Cl's")
   end
 end
