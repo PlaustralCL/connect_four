@@ -103,9 +103,7 @@ describe Display do
       it "converts it to a string version of board" do
         allow(display).to receive(:update_markers).and_return(marker_array)
         expect(display.create_visual_board(sample_array)).to eq(visual_string)
-
       end
     end
   end
-
 end

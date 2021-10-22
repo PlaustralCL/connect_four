@@ -36,6 +36,7 @@ class Board
   #   Not part of the public interface   #
   ########################################
 
+  # Returns a hash representing the board.
   def new_board
     ("1".."7").to_a.each_with_object({}) do |key, hash|
       hash[key] = Array.new(6) { |i| (i + 1).to_s }

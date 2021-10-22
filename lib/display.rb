@@ -36,7 +36,8 @@ class Display
     end
   end
 
-  # takes a 2d array, where each subarray represents a column of the board
+  # Takes a 2d array, where each subarray represents a column of the board and
+  # returns a string
   def visual_board(columns)
     columns.transpose
            .map { |row| row.join(" | ") }
