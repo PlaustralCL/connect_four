@@ -19,7 +19,7 @@ class Display
   def create_visual_board(board_columns = [])
     @board = board_columns
     @board = update_markers.each_slice(6).to_a
-    "#{'Connect Four'.center(33)}\n\n#{visual_board(board)}#{column_names}\n"
+    "#{'Connect Four'.center(33)}\n\n#{visual_board}#{column_names}\n"
   end
 
   # This method currently returns a one dimensional array
@@ -38,11 +38,11 @@ class Display
 
   # Takes a 2d array, where each subarray represents a column of the board and
   # returns a string
-  def visual_board(columns)
-    columns.transpose
-           .map { |row| row.join(" | ") }
-           .map { |row| row + "\n---+----+----+----+----+----+----\n" }
-           .join
+  def visual_board
+    board.transpose
+         .map { |row| row.join(" | ") }
+         .map { |row| row + "\n---+----+----+----+----+----+----\n" }
+         .join
   end
 
   def column_names
