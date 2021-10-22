@@ -10,9 +10,10 @@ require_relative "user_input"
 class Game
   include UserInput
 
-  attr_reader :board, :player1, :player2
+  attr_reader :display, :board, :player1, :player2
 
-  def initialize(board = Board.new, player1 = Player.new("Player 1", "X"), player2 = Player.new("Player 2", "O"))
+  def initialize(display: Display.new, board: Board.new, player1: Player.new("Player 1", "X"), player2: Player.new("Player 2", "O"))
+    @display = display
     @board = board
     @player1 = player1
     @player2 = player2
@@ -39,11 +40,13 @@ class Game
   end
 
   def show_board
-
+    display.clear_terminal
+    puts display.create_visual_board(board.board_columns)
   end
 
   def setup
     introduction
+    display.clear_terminal
     show_board
   end
 

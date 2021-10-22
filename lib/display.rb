@@ -11,7 +11,7 @@ class Display
 
   attr_reader :board, :location
 
-  def initialize(board: [], location: nil)
+  def initialize(location: nil, board: [])
     @board = board
     @location = location
   end
@@ -21,6 +21,14 @@ class Display
     @board = update_markers.each_slice(6).to_a
     "#{'Connect Four'.center(33)}\n\n#{visual_board}#{column_names}\n"
   end
+
+  def clear_terminal
+    system("clear") || system("Cl's")
+  end
+
+  ######################################
+  #  Not part of the public interface  #
+  ######################################
 
   # This method currently returns a one dimensional array
   def update_markers
@@ -49,7 +57,4 @@ class Display
     Array.new(7) { |i| i.zero? ? (i + 1).to_s.rjust(2) : (i + 1).to_s.rjust(5) }.join
   end
 
-  def clear_terminal
-    system("clear") || system("Cl's")
-  end
 end

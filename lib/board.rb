@@ -32,6 +32,10 @@ class Board
     gameboard.select { |_column, array| array.any?(/\d/) }.keys
   end
 
+  def gameboard_columns
+    gameboard.values
+  end
+
   ########################################
   #   Not part of the public interface   #
   ########################################
@@ -75,9 +79,6 @@ class Board
     end
   end
 
-  def gameboard_columns
-    gameboard.values
-  end
 
   def gameboard_rows
     gameboard.values.transpose

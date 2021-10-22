@@ -5,8 +5,9 @@ require_relative "../lib/game"
 describe Game do
   let(:player1) { instance_double("player1", name: "Player 1", marker: "X") }
   let(:player2) { instance_double("player2", name: "Player 2", marker: "O") }
+  let(:display) { instance_double("Display") }
   let(:board) { instance_double("board") }
-  subject(:basic_game) { described_class.new(board, player1, player2) }
+  subject(:basic_game) { described_class.new(display: display, board: board, player1: player1, player2: player2) }
 
   describe "#play_game" do
     before do
@@ -127,6 +128,15 @@ describe Game do
     it "sends request_input" do
       expect(basic_game).to receive(:request_input).once
       basic_game.play_again?
+    end
+  end
+
+  describe "#show_board" do
+    it "calls create_visual_board" do
+      allow(board).to receive(:board_columns).and_return([])
+      allow(display).to receive(:clear_terminal)
+      expect(display).to receive(:create_visual_board).with(Array).once
+      basic_game.show_board
     end
   end
 end
