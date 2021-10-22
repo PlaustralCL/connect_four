@@ -94,4 +94,18 @@ describe Display do
       end
     end
   end
+
+  describe "#create_visual_board" do
+    sample_array = Array.new(42) { |i| (i + 1).to_s }.each_slice(6).to_a
+    marker_array = Array.new(42) { "99" }
+    visual_string = "          Connect Four           \n\n99 | 99 | 99 | 99 | 99 | 99 | 99\n---+----+----+----+----+----+----\n99 | 99 | 99 | 99 | 99 | 99 | 99\n---+----+----+----+----+----+----\n99 | 99 | 99 | 99 | 99 | 99 | 99\n---+----+----+----+----+----+----\n99 | 99 | 99 | 99 | 99 | 99 | 99\n---+----+----+----+----+----+----\n99 | 99 | 99 | 99 | 99 | 99 | 99\n---+----+----+----+----+----+----\n99 | 99 | 99 | 99 | 99 | 99 | 99\n---+----+----+----+----+----+----\n 1    2    3    4    5    6    7\n"
+    context "when given a 2d array of columns" do
+      it "converts it to a string version of board" do
+        allow(display).to receive(:update_markers).and_return(marker_array)
+        expect(display.create_visual_board(sample_array)).to eq(visual_string)
+
+      end
+    end
+  end
+
 end
