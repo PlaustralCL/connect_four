@@ -1,23 +1,31 @@
-#frozen_string_literal: true
+# frozen_string_literal: true
 
 # Convert the Board information into something suitable for display.
 class Display
+  BLACK_CIRCLE = "\u26ab"
+  RED_CIRCLE = "\u{1F534}"
+  YELLOW_CIRCLE = "\u{1f7e1}"
+  RED_SQUARE = "\e[31;41m\u2b1b\e[0m"
+  BLUE_SQUARE = "\e[36;46m\u2b1b\e[0m"
+  GREY_SQUARE = "\e[1;30;1;40m\u2b1b\e[0m"
+
   attr_reader :board, :location
 
-  def initialize(board: Array.new(6) { |i| i.to_s }, location: nil)
+  def initialize(board: Array.new(12) { |i| i.to_s }, location: nil)
     @board = board
     @location = location
   end
 
+  # This method currently returns a one dimensional array
   def update_markers
     board.flatten.map do |marker|
       case marker
       when "X"
-        location ? "\u{1F534}" : "\e[31;41m\u2b1b\e[0m"
+        location ? RED_CIRCLE : RED_SQUARE
       when "O"
-        location ? "\u{1f7e1}" : "\e[36;46m\u2b1b\e[0m"
+        location ? YELLOW_CIRCLE : BLUE_SQUARE
       else
-        location ? "\u26ab" : "\e[1;30;1;40m\u2b1b\e[0m"
+        location ? BLACK_CIRCLE : GREY_SQUARE
       end
     end
   end
