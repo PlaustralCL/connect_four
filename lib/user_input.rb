@@ -9,6 +9,8 @@ module UserInput
 
   def request_input(phrase)
     puts phrase
-    gets.chomp.downcase
+    # STDIN is necessary here because ARGV is used in main.rb to
+    # initiate the whole program.
+    STDIN.gets.chomp.downcase
   end
 end

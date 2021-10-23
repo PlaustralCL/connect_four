@@ -92,12 +92,6 @@ describe Game do
     end
   end
 
-  describe "#show_board" do
-    xit "calls method to create board" do
-
-    end
-  end
-
   describe "#final_message" do
     context "when the game is tied" do
       it "shows the tie message" do
@@ -133,7 +127,8 @@ describe Game do
 
   describe "#show_board" do
     it "calls create_visual_board" do
-      allow(board).to receive(:board_columns).and_return([])
+      allow(board).to receive(:gameboard_columns).and_return([])
+      allow(basic_game).to receive(:puts)
       allow(display).to receive(:clear_terminal)
       expect(display).to receive(:create_visual_board).with(Array).once
       basic_game.show_board

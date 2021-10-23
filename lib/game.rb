@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# require_relative "board"
-# require_relative "player"
-# require_relative "display"
+require_relative "board"
+require_relative "player"
+require_relative "display"
 require_relative "user_input"
 
 # Controls the overall flow of the game by coordinating the actions of the
@@ -32,7 +32,7 @@ class Game
   end
 
   def play_one_round(current_player)
-    column = current_player.player_turn
+    column = current_player.player_turn(board.available_columns)
     return "quit" if column == "q"
 
     board.update_board(column, current_player.marker)
@@ -41,7 +41,7 @@ class Game
 
   def show_board
     display.clear_terminal
-    puts display.create_visual_board(board.board_columns)
+    puts display.create_visual_board(board.gameboard_columns)
   end
 
   def setup
