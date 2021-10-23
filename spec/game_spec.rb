@@ -75,6 +75,7 @@ describe Game do
   describe "#play_one_round" do
     context "when player inputs q" do
       it "returns without calling update_board" do
+        allow(board).to receive(:available_columns)
         allow(player1).to receive(:player_turn).and_return("q")
         expect(board).not_to receive(:update_board)
         basic_game.play_one_round(player1)
@@ -84,6 +85,7 @@ describe Game do
     context "when player provides valid input" do
       it "calls calls update_board with the correct column and marker" do
         valid_input = "3"
+        allow(board).to receive(:available_columns)
         allow(player2).to receive(:player_turn).and_return(valid_input)
         allow(basic_game).to receive(:show_board).and_return(nil)
         expect(board).to receive(:update_board).with("3", "O")
