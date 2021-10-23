@@ -5,10 +5,6 @@ require_relative "../lib/display"
 describe Display do
   subject(:display) { described_class.new }
 
-  describe "#update_view" do
-
-  end
-
   describe "#update_markers" do
     let(:sample_array) { [%w[1 2 3 X O X], %w[1 X X X O O O]] }
     black_circle = "\u26ab"
@@ -17,13 +13,14 @@ describe Display do
     red_square = "\e[31;41m\u2b1b\e[0m"
     blue_square = "\e[36;46m\u2b1b\e[0m"
     grey_square = "\e[1;30;1;40m\u2b1b\e[0m"
+    empty_space = "  "
     let(:updated_array) {
-      [black_circle, black_circle, black_circle, red_circle, yellow_circle, red_circle,
-       black_circle, red_circle, red_circle, red_circle, yellow_circle, yellow_circle, yellow_circle]
+      [empty_space, empty_space, empty_space, red_circle, yellow_circle, red_circle,
+       empty_space, red_circle, red_circle, red_circle, yellow_circle, yellow_circle, yellow_circle]
     }
     let(:home_array) {
-      [grey_square, grey_square, grey_square, red_square, blue_square, red_square,
-       grey_square, red_square, red_square, red_square, blue_square, blue_square, blue_square]
+      [empty_space, empty_space, empty_space, red_square, blue_square, red_square,
+       empty_space, red_square, red_square, red_square, blue_square, blue_square, blue_square]
     }
 
     context "when marker is X and location is replit" do
@@ -47,7 +44,7 @@ describe Display do
     context "when marker is a number and location is replit" do
       number_array = %w[1 2]
       subject(:update_numbers) { described_class.new(board: number_array, location: "replit") }
-      circle_array = [black_circle, black_circle]
+      circle_array = [empty_space, empty_space]
       it "replaces it with a black circle" do
         expect(update_numbers.update_markers).to eq(circle_array)
       end
@@ -81,7 +78,7 @@ describe Display do
     context "when marker is a number and location is default" do
       number_array = %w[1 2]
       subject(:update_numbers) { described_class.new(board: number_array) }
-      square_array = [grey_square, grey_square]
+      square_array = [empty_space, empty_space]
       it "replaces it with a grey square" do
         expect(update_numbers.update_markers).to eq(square_array)
       end

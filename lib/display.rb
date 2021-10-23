@@ -53,7 +53,8 @@ class Display
   end
 
   def update_empty
-    location ? BLACK_CIRCLE : GREY_SQUARE
+    # location ? BLACK_CIRCLE : GREY_SQUARE
+    "  "
   end
 
   # Takes a 2d array, where each subarray represents a column of the board and
