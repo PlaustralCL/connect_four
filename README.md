@@ -16,7 +16,7 @@ for unicode as Replit, you can run the game with the replit argument:
 Running the program without the argument will use a more limited set of unicode
 that should be more widely available.
 
-You can see the live version of the game on [Replit.com]()
+You can see the live version of the game on [Replit.com](https://replit.com/@PlaustralCL/connectfour#README.md)
 
 The repository is on [Github](https://github.com/PlaustralCL/connect_four)
 
