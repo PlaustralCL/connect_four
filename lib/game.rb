@@ -75,5 +75,4 @@ class Game
   def introduction
     puts "Welcome to Connect Four"
   end
-
 end

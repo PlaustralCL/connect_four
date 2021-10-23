@@ -8,5 +8,4 @@ require_relative "player"
 # File to initiate the Connect Four game
 
 game = Game.new(display: Display.new(location: ARGV[0]))
-# ARGV.clear
 game.play_game

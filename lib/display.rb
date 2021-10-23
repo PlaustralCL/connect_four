@@ -35,13 +35,25 @@ class Display
     board.flatten.map do |marker|
       case marker
       when "X"
-        location ? RED_CIRCLE : RED_SQUARE
+        update_x
       when "O"
-        location ? YELLOW_CIRCLE : BLUE_SQUARE
+        update_o
       else
-        location ? BLACK_CIRCLE : GREY_SQUARE
+        update_empty
       end
     end
+  end
+
+  def update_x
+    location ? RED_CIRCLE : RED_SQUARE
+  end
+
+  def update_o
+    location ? YELLOW_CIRCLE : BLUE_SQUARE
+  end
+
+  def update_empty
+    location ? BLACK_CIRCLE : GREY_SQUARE
   end
 
   # Takes a 2d array, where each subarray represents a column of the board and
@@ -56,5 +68,4 @@ class Display
   def column_names
     Array.new(7) { |i| i.zero? ? (i + 1).to_s.rjust(2) : (i + 1).to_s.rjust(5) }.join
   end
-
 end
