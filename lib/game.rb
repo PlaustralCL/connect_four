@@ -12,7 +12,13 @@ class Game
 
   attr_reader :display, :board, :player1, :player2
 
-  def initialize(display: Display.new, board: Board.new, player1: Player.new("Player 1", "X"), player2: Player.new("Player 2", "O"))
+  def initialize(
+    display: Display.new,
+    board: Board.new,
+    player1: Player.new("Player 1", "X"),
+    player2: Player.new("Player 2", "O")
+  )
+
     @display = display
     @board = board
     @player1 = player1
@@ -51,9 +57,10 @@ class Game
   end
 
   def final_message
-    if board.winner == ""
+    case board.winner
+    when ""
       puts "The game was tied.\nThanks for playing!\n"
-    elsif board.winner == "X"
+    when "X"
       puts "#{player1.name} won!\nThanks for playing!\n"
     else
       puts "#{player2.name} won!\nThanks for playing!\n"

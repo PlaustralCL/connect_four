@@ -20,7 +20,7 @@ class Player
       input = verify_input(player_input, available_choices)
       return input if input
 
-      puts "Input Error! Please use one of the following choices: #{available_choices.join(", ")}"
+      puts "Input Error! Please use one of the following choices: #{available_choices.join(', ')}"
     end
   end
 

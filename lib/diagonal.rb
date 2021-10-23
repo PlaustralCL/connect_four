@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 # Finds the diagonals in a matrix (2d array)
+# This is based on the explanation here: https://stackoverflow.com/a/23069914
+# The basic idea is to add a buffer to each row to shift the elements so that
+# the elements originally on the diagonal now line up in columns. The values used
+# as padding are then removed and you are left with only the actual values in diagonals.
+# In this case, nil is used for the padding to make it easier to remove later with #compact.
+#   1 2 3     |X|X|1|2|3|     | | |1|2|3|
+#   4 5 6  => |X|4|5|6|X|  => | |4|5|6| | => [[7], [4, 8], [1, 5, 9], [2, 6], [3]]
+#   7 8 9     |7|8|9|X|X|     |7|8|9| | |
 module Diagonal
   def diagonals(matrix)
     matrix = copy_matrix(matrix)

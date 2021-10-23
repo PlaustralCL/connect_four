@@ -9,8 +9,9 @@ module UserInput
 
   def request_input(phrase)
     puts phrase
-    # STDIN is necessary here because ARGV is used in main.rb to
-    # initiate the whole program.
-    STDIN.gets.chomp.downcase
+    # $stdin isnecessary here because ARGV is used in main.rb to
+    # initiate the whole program. The gets command looks first to ARGV to
+    # receive input so you have to direct it to look at STDIN instead.
+    $stdin.gets.chomp.downcase
   end
 end

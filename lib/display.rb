@@ -53,7 +53,6 @@ class Display
   end
 
   def update_empty
-    # location ? BLACK_CIRCLE : GREY_SQUARE
     "  "
   end
 
@@ -62,7 +61,7 @@ class Display
   def visual_board
     board.transpose
          .map { |row| row.join(" | ") }
-         .map { |row| row + "\n---+----+----+----+----+----+----\n" }
+         .map { |row| "#{row}\n---+----+----+----+----+----+----\n" }
          .join
   end
 
